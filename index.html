@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlog</title>
+    <link rel="stylesheet" href="style.css">
+    
+  </head>
+  <body>
+    <header>
+      <h1> Cath's Watch Log</h1>
+    </header>
+    <div class="layout">
+      <nav class="sidebar">
+        <a href="#" class="active" data-page="home">Home</a>
+        <a href="#" data-page="finished">Finished</a>
+        <a href="#" data-page="ongoing">On Going</a>
+        <a href="#" data-page="towatch">To Watch</a>
+        <a href="#" data-page="add">Add</a>
+        <a href="#">About</a>
+      </nav>
+      
+      <main class="content">
+        <div class="page" id="home">
+          <input type="text" class="search" placeholder="Search..."/>
+          
+          <h2>Recently watched</h2>
+          <div class="row" id="home-row"></div>
+        </div>
+        <div class="page" id="finished" hidden> 
+          <h2>Finished</h2>
+          <div id="finished-list"></div>   
+        </div>
+        
+        <div class="page" id="ongoing" hidden> 
+          <h2>On Going</h2>
+          <div id="ongoing-list"></div>      
+        </div>
+        
+        <div class="page" id="towatch" hidden> 
+          <h2>To Watch</h2>
+          <div id="towatch-list"></div>      
+        </div>
+        
+        <div class="page" id="add" hidden>
+          <h2>Add a drama</h2>
+          
+          <form id="add-form">
+            <input type="text" id="f-title" placeholder="Title" required>
+            <input type="text" id="f-poster" placeholder="Poster Image Link">
+            <input type="number" id="f-year" placeholder="Year">
+            <input type="number" id="f-episodes" placeholder="Episodes">
+            <input type="text" id="f-genres" placeholder="Genres">
+            
+            <select id="f-country">
+              <option>Korean</option>
+              <option>Japanese</option>
+              <option>Thai</option>
+              <option>Filipino</option>
+              <option>Anime</option>
+              <option>English</option>
+              <option>Chinese</option>
+            </select>
+            
+            <select id="f-status">
+              <option value="finished">Finished</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="towatch">"To Watch</option>
+            </select>
+            
+            <select id="f-rating">
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★</option>
+              <option value="3">★★★</option>
+              <option value="2">★★</option>
+              <option value="1">★</option>
+            </select>
+            
+            <textarea id="f-review" placeholder="My review"></textarea>
+            <button type="submit">Add</button>
+          </form>
+        </div>
+      </main>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
