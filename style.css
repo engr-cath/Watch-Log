@@ -1,0 +1,151 @@
+body
+{
+  background-color: #141414;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar a:hover
+{
+  color: gold;
+}
+.sidebar a.active
+{
+  color: gold;
+  font-weight: bold;
+}
+
+.search
+{
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: none;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.genre
+{
+  margin-bottom: 30px;
+}
+
+.genre h1
+{
+  font-size: 22px;
+  border-left: 4px solid gold;
+  padding-left: 10px;
+}
+.genre h3
+{
+  font-size: 16px;
+  color: #bbb;
+  margin: 15px 0 8px;
+}
+
+.card
+{
+  background-color: #222;
+  padding: 15px;
+  border-radius: 10px;
+  flex: 0 0 100px;
+}
+
+.card img
+{
+  width: 100%;
+  border-radius: 8px;
+}
+
+.card h2
+{
+ font-size: 18px; 
+ margin: 10px 0 5px;
+}
+
+.card p
+{
+  margin: 4px 0;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.card .stars
+{
+  color: gold;
+}
+
+.row
+{
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+}
+
+header
+{
+  background-color: #000;
+  padding: 15px;
+}
+
+.layout
+{
+  display: flex;
+}
+
+.sidebar
+{
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  background-color: #1b1b1b;
+}
+
+.sidebar a
+{
+  color: white;
+  text-decoration: none;
+}
+
+.content
+{
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+}
+
+#add-form
+{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+#add-form input, 
+#add-form select,
+#add-form textarea
+{
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+}
+
+#add-form button
+{
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: gold;
+  font-size: 16px;
+  font-weight: bold;
+}
+
