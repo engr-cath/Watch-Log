@@ -157,23 +157,23 @@ dramas
   addForm.addEventListener("submit", function (event) {
     event.preventDefault();
     
-    const newDrama = {
-      title: document.querySelector("#f-title").value,
-      poster: document.querySelector("#f-poster").value || "https://via.placeholder.com/200x300",
-      year: Number(document.querySelector("#f-year").value),
-      episodes: Number(document.querySelector("#f-episodes").value),
-      genres: document.querySelector("#f-genres").value,
-      country: document.querySelector("#f-country").value,
-      status: document.querySelector("#f-status").value,
-      rating: Number(document.querySelector("#f-rating").value),
-      review: document.querySelector("#f-review").value
-    };
+    const SUPABASE_URL = "https://ulndueveyrqackqnnimw.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsbmR1ZXZleXJxYWNrcW5uaW13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4NjYzNjUsImV4cCI6MjEwODQ0MjM2NX0.bbqrQDJz-DE797e1pMjsOBQfZfa7WL59tEDigAKGkKU";
     
-    dramas.push(newDrama);
-    renderAll();
-    addForm.reset();
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     
-    dramas.push(newDrama);
-    saveDramas();
-    renderAll();
+    let dramas =[];
+    
+    async function loadDramas() {
+      const { data, error } = await db.from("dramas").select("*");
+      
+      if (error) {
+        alert("Could not load: " + error.message);
+      }
+      
+      dramas =data;
+      renderAll();
+    }
   });
+  
+  loadDramas();
