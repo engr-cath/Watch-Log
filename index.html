@@ -51,7 +51,13 @@
             <input type="text" id="f-poster" placeholder="Poster Image Link">
             <input type="number" id="f-year" placeholder="Year">
             <input type="number" id="f-episodes" placeholder="Episodes">
-            <input type="text" id="f-genres" placeholder="Genres">
+            
+            <select id="f-genres">
+              <option>Thriller</option>
+              <option>Comedy</option>
+              <option>Romance</option>
+              <option>Action</option>
+            </select>
             
             <select id="f-country">
               <option>Korean</option>
@@ -84,5 +90,6 @@
       </main>
     </div>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </body>
 </html>
