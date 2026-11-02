@@ -13,12 +13,13 @@
     </header>
     <div class="layout">
       <nav class="sidebar">
-        <a href="#" class="active" data-page="home">Home</a>
+        <a href="#" data-page="home">Home</a>
         <a href="#" data-page="finished">Finished</a>
         <a href="#" data-page="ongoing">On Going</a>
         <a href="#" data-page="towatch">To Watch</a>
-        <a href="#" data-page="add">Add</a>
-        <a href="#">About</a>
+        <a href="#" data-page="add" id="add-link" hidden>Add</a>
+        <a href="#" data-page="login" id="login-link">Login</a>
+        <a href="#" data-page="about"="">About</a>
       </nav>
       
       <main class="content">
@@ -72,7 +73,7 @@
             <select id="f-status">
               <option value="finished">Finished</option>
               <option value="ongoing">Ongoing</option>
-              <option value="towatch">"To Watch</option>
+              <option value="towatch">To Watch</option>
             </select>
             
             <select id="f-rating">
@@ -83,13 +84,51 @@
               <option value="1">★</option>
             </select>
             
+            <textarea id="f-cast" placeholder="Cast, one per line: Acor as Character"></textarea>
+            
             <textarea id="f-review" placeholder="My review"></textarea>
             <button type="submit">Add</button>
           </form>
         </div>
+        
+        <div class="page" id="login" hidden>
+          <h2>Login</h2>
+          
+          <form id="login-form">
+            <input type="email" id="l-email" placeholder="Email" required />
+            <input type="password" id="l-password" placeholder="Password"/>
+            <button type="submit">Log in</button>
+          </form>
+          
+          <p id="login-message"></p>
+        </div>
+        
+        <div class="page" id="detail">
+          <button id="back-btn">← Back</button>
+          <div id="detail-content"></div>
+        </div>
+        
+        <div class="page" id="about" hidden>
+          <h2>About</h2>
+          
+          <img class="about-photo" src="IMG_20261021_215236.jpg" alt="Photo of Cath"/>
+          
+          <p>
+            Hi, I'm Engineer Cathlyn Samarita! This a peesonal watch log where i keep every movie amd series I've watched, rhe one I'm watching now, and the ones i want to watch next.
+            
+            You can use find here something you cam watcj or add to your watch list.
+          </p>
+          
+          <h3>Built with</h3>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+            <li>Supabase forthe online database</li>
+            <li>Github Pages fpr hosting</li>
+          </ul>
+        </div>
       </main>
     </div>
-    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
   </body>
 </html>
