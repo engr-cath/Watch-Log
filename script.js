@@ -317,3 +317,7 @@ document.addEventListener("error", function (event) {
    
 loadDramas();
 checkSession();
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
