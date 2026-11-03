@@ -338,7 +338,45 @@ document.querySelector("#tmdb-btn").addEventListener("click", async function () 
     return `<div class="tmdb-item" data-index="${i}">${title} (${date.slice(0, 4)})</div>`;
   }).join("");
 });   
-   
+
+const genreMap = { 10749: "Romance", 35: "Comedy", 53: "Thriller", 28: "Action", 10759: "Action" };
+const languageMap = { ko: "Korean", ja: "Japanese", zh: "Chinese", th: "Thai", tl: "Filipino", en: "English" };
+
+document.querySelector("#tmdb-results").addEventListener("click", async function (event) {
+  const item = event.target.closest(".tmdb-item");
+  if (!item) return;
+
+  const r = tmdbResults[item.dataset.index];
+
+  let genre = "";
+  for (const id of r.genre_ids) {
+    if (genreMap[id]) {
+      genre = genreMap[id];
+      break;
+    }
+  }
+
+  let episodes = 1;
+  if (r.media_type === "tv") {
+    const res = await fetch(`https://api.themoviedb.org/3/tv/${r.id}?api_key=${TMDB_KEY}`);
+    const details = await res.json();
+    episodes = details.number_of_episodes;
+  }
+
+  const date = r.release_date || r.first_air_date || "";
+
+  document.querySelector("#f-title").value = r.title || r.name;
+  document.querySelector("#f-year").value = date.slice(0, 4);
+  document.querySelector("#f-episodes").value = episodes;
+  document.querySelector("#f-genres").value = genre;
+  document.querySelector("#f-country").value = languageMap[r.original_language] || "";
+  document.querySelector("#f-poster").value = r.poster_path
+    ? "https://image.tmdb.org/t/p/w500" + r.poster_path
+    : "";
+
+  document.querySelector("#tmdb-results").innerHTML = "";
+});
+
 loadDramas();
 checkSession();
 
