@@ -39,6 +39,7 @@ function makeCard(drama) {
           <option value="towatch" ${drama.status === "towatch" ? "selected" : ""}>To Watch</option>
         </select>
         <button class="delete-btn" data-id="${drama.id}">Delete</button>
+        <button class="edit-btn" data-id="${drama.id}">Edit</button>
       </div>
     `;
   }
@@ -137,6 +138,11 @@ links.forEach(function (link) {
       return;
     }
 
+    if (link.dataset.page === "add") {
+      editingId = null;
+      addForm.reset();
+    }
+    
     if (!link.dataset.page) return;
     showPage(link.dataset.page);
   });
@@ -176,8 +182,15 @@ addForm.addEventListener("submit", async function (event) {
     review: document.querySelector("#f-review").value,
     cast_list: document.querySelector("#f-cast").value
   };
-
-  const { error } = await db.from("dramas").insert(newDrama);
+  
+  let result;
+  if (editingId === null) {
+    result = await db.from("dramas").insert(newDrama);
+  }
+  else {
+    result = await db.from("dramas").update(newDrama).eq("id", editingId);
+  }
+  const error = result;
 
   if (error) {
     alert("Could not add: " + error.message);
@@ -186,6 +199,8 @@ addForm.addEventListener("submit", async function (event) {
 
   await loadDramas();
   addForm.reset();
+  editingId = null;
+  showPage("home");
 });
 
 const loginForm = document.querySelector("#login-form");
@@ -307,7 +322,7 @@ document.addEventListener("error", function (event) {
   if (!isDetail && !isCard) return;
 
   const box = document.createElement("div");
-  box.className = (isDetail ? "detail-poster" : "poster") + "poster-empty";
+  box.className = (isDetail ? "detail-poster" : "poster") + " poster-empty";
   if (img.dataset.id) box.dataset.id = img.dataset.id;
   box.textContent = img.alt.charAt(0).toUpperCase();
   img.replaceWith(box);
@@ -377,9 +392,35 @@ document.querySelector("#tmdb-results").addEventListener("click", async function
   document.querySelector("#tmdb-results").innerHTML = "";
 });
 
+let editingId = null;
+
+document.addEventListener("click", function(event) {
+  const btn = event.target.closest(".edit-btn");
+  if (!btn) return;
+  
+  const drama = dramas.find(function (d) {
+    return String(d.id) === btn.dataset.id;
+  });
+  
+  editingId = drama.id;
+  
+  document.querySelector("#f-title").value = drama.title;
+  document.querySelector("#f-poster").value = drama.poster || "";
+  document.querySelector("#f-year").value = drama.year;
+  document.querySelector("#f-episodes").value = drama.episodes;
+  document.querySelector("#f-genres").value = drama.genres;
+  document.querySelector("#f-country").value = drama.country;
+  document.querySelector("#f-status").value = drama.status;
+  document.querySelector("#f-rating").value = drama.rating;
+  document.querySelector("#f-cast").value = drama.cast_list || "";
+  document.querySelector("#f-review").value = drama.review || "";
+  
+  showPage("add");
+});
+
 loadDramas();
 checkSession();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
-}
+    }
