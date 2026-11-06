@@ -11,7 +11,8 @@
   </head>
   <body>
     <header>
-      <h1> Cath's Watch Log</h1>
+      <h1> CATH'S WATCH LOG</h1>
+      <p>EVERY SERIES AND MOVIES I WATCHED</p>
     </header>
     <div class="layout">
       <nav class="sidebar">
@@ -21,7 +22,7 @@
         <a href="#" data-page="towatch">To Watch</a>
         <a href="#" data-page="add" id="add-link" hidden>Add</a>
         <a href="#" data-page="login" id="login-link">Login</a>
-        <a href="#" data-page="about"="">About</a>
+        <a href="#" data-page="about">About</a>
       </nav>
       
       <main class="content">
@@ -29,8 +30,11 @@
           <input type="text" class="search" placeholder="Search..."/>
           
           <h2>Recently watched</h2>
-          <div class="row" id="home-row"></div>
+          <div class="film">
+            <div id="home-row" class="row"></div>
+          </div>
         </div>
+        
         <div class="page" id="finished" hidden> 
           <h2>Finished</h2>
           <div id="finished-list"></div>   
@@ -111,7 +115,7 @@
           <p id="login-message"></p>
         </div>
         
-        <div class="page" id="detail">
+        <div class="page" id="detail" hidden>
           <button id="back-btn">← Back</button>
           <div id="detail-content"></div>
         </div>
@@ -133,6 +137,9 @@
             <li>Supabase forthe online database</li>
             <li>Github Pages fpr hosting</li>
           </ul>
+          <p class="tmdb-credit">
+            This product uses the TMDB API but is not endorsed or certified by TMDB.
+          </p>
         </div>
       </main>
     </div>
