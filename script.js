@@ -81,11 +81,11 @@ function renderByGenre(containerId, status) {
 
       if (matches.length === 0) return;
 
-      html += `<h3>${country}</h3><div class="row">`;
+      html += `<h3>${country}</h3><div class="film"><div class="row">`;
       matches.forEach(function (drama) {
         html += makeCard(drama);
       });
-      html += `</div>`;
+      html += `<div></div>`;
     });
 
     if (html === "") return;
@@ -190,7 +190,7 @@ addForm.addEventListener("submit", async function (event) {
   else {
     result = await db.from("dramas").update(newDrama).eq("id", editingId);
   }
-  const error = result;
+  const {error} = result;
 
   if (error) {
     alert("Could not add: " + error.message);
@@ -423,4 +423,4 @@ checkSession();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
-    }
+  }
