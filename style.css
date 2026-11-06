@@ -1,10 +1,16 @@
-body
-{
-  background-color: #141414;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --bg: #0f0b09;
+  --curtain: #5a1420;
+  --curtain-dark: #2a0a10;
+  --gold: #e3b04b;
+  --cream: #f3e9d8;
+  --muted: #b9a98f;
 }
 
+body {
+  background: var(--bg);
+  color: var(--cream);
+}
 .sidebar a:hover
 {
   color: gold;
@@ -26,8 +32,8 @@ body
   position: sticky;
   top: 0;
   height: 100vh;
-  align-self: 
-  box-sizing border-box;
+  align-self: flex-start;
+  box-sizing: border-box;
 }
 
 .search
@@ -35,7 +41,7 @@ body
   width: 100%;
   padding: 12px 20px;
   border-radius: 25px;
-  border: none;
+  border: 1px solid gold;
   background-color: #333;
   color: white;
   font-size: 16px;
@@ -63,10 +69,10 @@ body
 
 .card
 {
-  background-color: #222;
-  padding: 15px;
+  background: transparent;
+  padding: 0;
+  flex: 0 0 200px;
   border-radius: 10px;
-  flex: 0 0 100px;
 }
 
 .card img,
@@ -116,21 +122,25 @@ body
 
 header
 {
-  background-color: #000;
-  height: var(--header-height);
+  background: linear-gradient(160deg, #7a1f2b, #2a0d12);
+  border-bottom: 3px solid var(--gold);
+  /*height: var(--header-height);*/
   display: flex;
-  align-items: center;
-  padding: 0 15px;
+  flex-direction: column;
+  padding: 20px 15px;
   box-sizing: border-box;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 header h1
 {
   margin: 0;
-  font-size: 22px;
+  font-size: 50px;
+}
+
+header p
+{
+  padding: 5px;
+  
 }
 
 .layout
@@ -186,7 +196,7 @@ header h1
   font-size: 16px;
 }
 
-#add-form button
+#add-form button,
 #login-form button
 {
   padding: 12px;
@@ -224,7 +234,7 @@ header h1
   cursor: pointer;
 }
 
-#details-content .detail-poster
+#detail-content .detail-poster
 {
   width: 200px;
   aspect-ratio: 2 / 3;
@@ -265,6 +275,8 @@ header h1
   margin-top: 25px;
 }
 
+
+/*
 @media (max-width: 700px) 
 {
   .layout
@@ -298,11 +310,15 @@ header h1
     flex: 0 0 160px;
   }
   
-  header
+  header h1
   {
     font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
   }
 }
+*/
 
 .about-photo
 {
@@ -337,10 +353,37 @@ header h1
   width: 20%;
   padding: 12px 20px;
   border-radius: 50px;
-  border: grid;
+  border: none;
   background-color: mediumaquamarine;
   color: white;
   font-size: 16px;
   margin-bottom: 20px;
-  box-sizing: border-box;
+}
+
+#finished,
+#ongoing,
+#towatch
+{
+  
+}
+
+.film
+{
+  background: #050403;
+  border: 1px solid #2a211b;
+  border-radius: 6px;
+}
+
+.film::before,
+.film::after
+{
+  content: "";
+  display: block;
+  height: 18px;
+  background: url("images/film-strip-tile.svg") repeat-x;
+}
+
+.film .row
+{
+  padding: 10px 18px;
 }
