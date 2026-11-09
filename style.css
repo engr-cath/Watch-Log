@@ -360,13 +360,6 @@ header p
   margin-bottom: 20px;
 }
 
-#finished,
-#ongoing,
-#towatch
-{
-  
-}
-
 .film
 {
   background: #050403;
@@ -386,4 +379,14 @@ header p
 .film .row
 {
   padding: 10px 18px;
+}
+
+
+header::before
+{
+  content: "";
+  display: block;
+  height: 16px;
+  margin-bottom: 10px;
+  background: url("images/marquee-bulbs-tile.svg") repeat-x;
 }
