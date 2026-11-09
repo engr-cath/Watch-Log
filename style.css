@@ -124,13 +124,7 @@ body {
 
 header
 {
-  background: linear-gradient(160deg, #7a1f2b, #2a0d12);
-  border-bottom: 3px solid var(--gold);
-  /*height: var(--header-height);*/
-  display: flex;
-  flex-direction: column;
-  padding: 20px 15px;
-  box-sizing: border-box;
+  background: url("images/curtain.svg") center / cover;
 }
 
 header h1
@@ -398,10 +392,31 @@ header::before
   background: url("images/marquee-bulbs-tile.svg") repeat-x;
 }
 
-header::before
+.ticket
 {
-  content: "";
-  display: block;
-  height: 20px;
-  background: url("images/film-reel.svg");
+  background: url("images/ticket.svg") center / contain no-repeat;
+  padding: 20px 50px;
+}
+
+.brand
+{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.reel
+{
+  width: 56px;
+  height: 56px;
+}
+
+.reel
+{
+  animation: spin 12s linear infinite;
+}
+
+@keyframes spin
+{
+  to { transform: rotate(360deg); }
 }
