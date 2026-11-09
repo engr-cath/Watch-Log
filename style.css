@@ -204,6 +204,12 @@ header p
   font-weight: bold;
 }
 
+.add-form
+{
+  border-right: 18px solid transparent;
+  border-image: url("images/film-strip-vertical-tile.svg") 0 18 0 0 repeat;
+}
+
 .admin 
 {
   display: flex;
