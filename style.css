@@ -397,3 +397,11 @@ header::before
   margin-bottom: 10px;
   background: url("images/marquee-bulbs-tile.svg") repeat-x;
 }
+
+header::before
+{
+  content: "";
+  display: block;
+  height: 20px;
+  background: url("images/film-reel.svg");
+}
