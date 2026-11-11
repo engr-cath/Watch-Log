@@ -7,17 +7,21 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
-    <link rel="icon" type="image/png" href="icon-612.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
   </head>
   <body>
     <header>
-      <img src="images/film-reel.svg" alt="Film reel" class="reel">
-      <h1> CATH'S WATCH LOG</h1>
-      <p>EVERY SERIES AND MOVIES I WATCHED</p>
+      <div class="brand">
+        <img src="images/film-reel.svg" alt="Film reel" class="reel">
+        <div>
+          <h1>CATH'S WATCH LOG</h1>
+          <p>EVERY SERIES AND MOVIES I WATCHED</p>
+        </div>
+      </div>
     </header>
     <div class="layout">
       <nav class="sidebar">
-        <a href="#" data-page="home"><img src="images/ticket.svg alt="ticket/>Home</a>
+        <a href="#" data-page="home">Home</a>
         <a href="#" data-page="finished">Finished</a>
         <a href="#" data-page="ongoing">On Going</a>
         <a href="#" data-page="towatch">To Watch</a>
@@ -25,53 +29,54 @@
         <a href="#" data-page="login" id="login-link">Login</a>
         <a href="#" data-page="about">About</a>
       </nav>
-      
+
       <main class="content">
         <div class="page" id="home">
           <input type="text" class="search" placeholder="Search..."/>
-          
+
           <h2>Recently watched</h2>
           <div class="film">
             <div id="home-row" class="row"></div>
           </div>
         </div>
-        
-        <div class="page" id="finished" hidden> 
+
+        <div class="page" id="finished" hidden>
           <h2>Finished</h2>
-          <div id="finished-list"></div>   
+          <div id="finished-list"></div>
         </div>
-        
-        <div class="page" id="ongoing" hidden> 
+
+        <div class="page" id="ongoing" hidden>
           <h2>On Going</h2>
-          <div id="ongoing-list"></div>      
+          <div id="ongoing-list"></div>
         </div>
-        
-        <div class="page" id="towatch" hidden> 
+
+        <div class="page" id="towatch" hidden>
           <h2>To Watch</h2>
-          <div id="towatch-list"></div>      
+          <div id="towatch-list"></div>
         </div>
-        
+
         <div class="page" id="add" hidden>
-          <span class="ticket">New Series/Movie</span>
+          <h2>New Series/Movie</h2>
+
           <div id="tmdb-box">
             <input type="text" id="tmdb-search" placeholder="Search TMDB to auto-fill...">
             <button type="button" id="tmdb-btn">Search</button>
-           <div id="tmdb-results"></div>
-        </div>
-          
+            <div id="tmdb-results"></div>
+          </div>
+
           <form id="add-form">
             <input type="text" id="f-title" placeholder="Title" required>
             <input type="text" id="f-poster" placeholder="Poster Image Link">
             <input type="number" id="f-year" placeholder="Year">
             <input type="number" id="f-episodes" placeholder="Episodes">
-            
+
             <select id="f-genres">
               <option>Thriller</option>
               <option>Comedy</option>
               <option>Romance</option>
               <option>Action</option>
             </select>
-            
+
             <select id="f-country">
               <option>Korean</option>
               <option>Japanese</option>
@@ -81,13 +86,13 @@
               <option>English</option>
               <option>Chinese</option>
             </select>
-            
+
             <select id="f-status">
               <option value="finished">Finished</option>
               <option value="ongoing">Ongoing</option>
               <option value="towatch">To Watch</option>
             </select>
-            
+
             <select id="f-rating">
               <option value="5">★★★★★</option>
               <option value="4">★★★★</option>
@@ -95,47 +100,47 @@
               <option value="2">★★</option>
               <option value="1">★</option>
             </select>
-            
-            <textarea id="f-cast" placeholder="Cast, one per line: Acor as Character"></textarea>
-            
+
+            <textarea id="f-cast" placeholder="Cast, one per line: Actor as Character"></textarea>
+
             <textarea id="f-review" placeholder="My review"></textarea>
             <button type="submit">Add</button>
           </form>
         </div>
-        
+
         <div class="page" id="login" hidden>
           <h2>Login</h2>
-          
+
           <form id="login-form">
             <input type="email" id="l-email" placeholder="Email" required />
             <input type="password" id="l-password" placeholder="Password"/>
             <button type="submit">Log in</button>
           </form>
-          
+
           <p id="login-message"></p>
         </div>
-        
+
         <div class="page" id="detail" hidden>
           <button id="back-btn">← Back</button>
           <div id="detail-content"></div>
         </div>
-        
+
         <div class="page" id="about" hidden>
           <h2>About</h2>
-          
+
           <img class="about-photo" src="IMG_20261021_215236.jpg" alt="Photo of Cath"/>
-          
+
           <p>
-            Hi, I'm Engineer Cathlyn Samarita! This a peesonal watch log where i keep every movie amd series I've watched, rhe one I'm watching now, and the ones i want to watch next.
-            
-            You can use find here something you cam watcj or add to your watch list.
+            Hi, I'm Engineer Cathlyn Samarita! This is a personal watch log where I keep every movie and series I've watched, the one I'm watching now, and the ones I want to watch next.
+
+            You can find here something you can watch, or add to your own watch list.
           </p>
-          
+
           <h3>Built with</h3>
           <ul>
             <li>HTML, CSS, JavaScript</li>
-            <li>Supabase forthe online database</li>
-            <li>Github Pages fpr hosting</li>
+            <li>Supabase for the online database</li>
+            <li>GitHub Pages for hosting</li>
           </ul>
           <p class="tmdb-credit">
             This product uses the TMDB API but is not endorsed or certified by TMDB.
