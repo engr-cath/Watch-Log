@@ -10,6 +10,7 @@
   --gold: #e3b04b;
   --cream: #f3e9d8;
   --muted: #b9a98f;
+  --header-height: 120px;
 }
 
 body
@@ -25,9 +26,14 @@ header
   background: url("images/curtain.svg") center / cover;
   border-bottom: 3px solid var(--gold);
   padding: 8px 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-sizing: border-box;
+  height: var(--header-height);
 }
 
-/* row of marquee bulbs */
+
 header::before
 {
   content: "";
@@ -35,6 +41,8 @@ header::before
   height: 16px;
   margin: 0 -15px 10px;
   background: url("images/marquee-bulbs-tile.svg") repeat-x;
+  position: sticky;
+  top: 0;
 }
 
 .brand
@@ -42,6 +50,7 @@ header::before
   display: flex;
   align-items: center;
   gap: 14px;
+  position: sticky;
 }
 
 .reel
@@ -87,16 +96,16 @@ header p
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /*justify-content: center;*/
   gap: 12px;
   padding: 10px;
   background:
     repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0 8px, transparent 8px 24px),
     linear-gradient(90deg, var(--curtain-dark), var(--curtain), var(--curtain-dark));
   position: sticky;
-  top: 0;
-  height: 100vh;
   align-self: flex-start;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
 }
 
 .sidebar a
@@ -128,16 +137,6 @@ header p
 .sidebar a[hidden]
 {
   display: none;
-}
-
-
-.page > h2
-{
-  display: inline-block;
-  margin: 0 0 18px;
-  padding: 18px 70px 18px 24px;
-  background: url("images/ticket.svg") center / 100% 100% no-repeat;
-  font-size: 22px;
 }
 
 .search
@@ -432,6 +431,7 @@ header p
     justify-content: flex-start;
     overflow-x: auto;
     z-index: 9;
+    position: sta;
   }
 
   .sidebar a
@@ -448,9 +448,26 @@ header p
   {
     flex: 0 0 160px;
   }
+  
+  header
+  {
+    height: auto;
+    padding: 6px 15px 10px;
+  }
+  
+  header p
+  {
+    display: none;
+  }
 
   header h1
   {
     font-size: 22px;
+  }
+  
+  .reel
+  {
+    width: 40px;
+    height: 40px;
   }
 }
