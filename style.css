@@ -1,5 +1,10 @@
-:root {
+:root
+{
   --bg: #0f0b09;
+  --film: #2a2420;
+  --card: #0c0a09;
+  --panel: #1b1411;
+  --line: #3a2d24;
   --curtain: #5a1420;
   --curtain-dark: #2a0a10;
   --gold: #e3b04b;
@@ -7,54 +12,146 @@
   --muted: #b9a98f;
 }
 
-body {
+body
+{
+  margin: 0;
   background: var(--bg);
   color: var(--cream);
 }
-.sidebar a:hover
+
+
+header
 {
-  color: gold;
+  background: url("images/curtain.svg") center / cover;
+  border-bottom: 3px solid var(--gold);
+  padding: 8px 15px 20px;
 }
-.sidebar a.active
+
+/* row of marquee bulbs */
+header::before
 {
-  color: gold;
-  font-weight: bold;
+  content: "";
+  display: block;
+  height: 16px;
+  margin: 0 -15px 10px;
+  background: url("images/marquee-bulbs-tile.svg") repeat-x;
+}
+
+.brand
+{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.reel
+{
+  width: 56px;
+  height: 56px;
+  animation: spin 12s linear infinite;
+}
+
+@keyframes spin
+{
+  to { transform: rotate(360deg); }
+}
+
+header h1
+{
+  margin: 0;
+  font-size: 32px;
+}
+
+header p
+{
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.layout
+{
+  display: flex;
+}
+
+.content
+{
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
 }
 
 .sidebar
 {
-  width: 100%;
-  min-height: 45px;
+  width: 150px;
+  flex-shrink: 0;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   gap: 12px;
-  padding: 15px;
-  background: url("images/curtain.svg") center / cover;
+  padding: 10px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0 8px, transparent 8px 24px),
+    linear-gradient(90deg, var(--curtain-dark), var(--curtain), var(--curtain-dark));
   position: sticky;
   top: 0;
   height: 100vh;
   align-self: flex-start;
+}
+
+.sidebar a
+{
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
-  padding: 10px;
-  color: white;
+  aspect-ratio: 260 / 90;
+  padding: 0 28% 0 14px;
+  background: url("images/ticket.svg") center / 100% 100% no-repeat;
+  color: var(--cream);
+  font-size: 14px;
+  white-space: nowrap;
   text-decoration: none;
-  text-align: center;
+}
+
+.sidebar a:hover,
+.sidebar a.active
+{
+  color: var(--gold);
+}
+
+.sidebar a.active
+{
+  font-weight: bold;
+}
+
+/* display:flex would override the hidden attribute (Add link) */
+.sidebar a[hidden]
+{
+  display: none;
+}
+
+
+.page > h2
+{
+  display: inline-block;
+  margin: 0 0 18px;
+  padding: 18px 70px 18px 24px;
+  background: url("images/ticket.svg") center / 100% 100% no-repeat;
+  font-size: 22px;
 }
 
 .search
 {
+  display: block;
   width: 100%;
-  padding: 12px 20px;
-  border-radius: 25px;
-  border: 1px solid gold;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
-  margin-bottom: 20px;
   box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 25px;
+  background-color: var(--panel);
+  color: var(--cream);
+  font-size: 16px;
 }
 
 .genre
@@ -65,62 +162,31 @@ body {
 .genre h1
 {
   font-size: 22px;
-  border-left: 4px solid gold;
+  border-left: 4px solid var(--gold);
   padding-left: 10px;
 }
+
 .genre h3
 {
   font-size: 16px;
-  color: #bbb;
+  color: var(--muted);
   margin: 15px 0 8px;
 }
 
-.card
+.film
 {
-  background: #0b0908;
-  padding: 12px;
-  border-radius: 10px;
-  flex: 0 0 200px;
+  background: var(--film);
+  border: 1px solid var(--line);
+  border-radius: 6px;
 }
 
-.card img,
-.poster-empty
+.film::before,
+.film::after
 {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-  border-radius: 5px;
-  border: 2px dashed gold;
-}
-
-.poster-empty
-{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #333;
-  color: #777;
-  font-size: 64px;
-  font-weight: bold;
-  
-}
-
-.card h2
-{
- font-size: 18px; 
- margin: 10px 0 5px;
-}
-
-.card p
-{
-  margin: 4px 0;
-  font-size: 14px;
-  color: #bbb;
-}
-
-.card .stars
-{
-  color: gold;
+  content: "";
+  display: block;
+  height: 18px;
+  background: url("images/film-strip-tile.svg") repeat-x;
 }
 
 .row
@@ -130,103 +196,66 @@ body {
   overflow-x: auto;
 }
 
-
-header
+.film .row
 {
-  background: url("images/curtain.svg") center / cover;
+  padding: 10px 18px;
 }
 
-header h1
+.card
 {
-  margin: 0;
-  font-size: 50px;
-}
-
-header p
-{
-  padding: 5px;
-  
-}
-
-.layout
-{
-  display: flex;
-}
-
-.sidebar
-{
-  width: 110px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 15px;
-  background-color: #1b1b1b;
-  top: var(--header-height);
-  height: calc(100vh - var(--header-height));
-}
-
-.sidebar a
-{
-  color: white;
-  text-decoration: none;
-  background: url(images/ticket) center / 100% no-repeat;
-  padding: 15px 20px;
-  text-align: center;
-  gap: 5px;
-  display: block;
-}
-
-.content
-{
-  flex: 1;
-  min-width: 0;
-  padding: 15px;
-  overflow-y: auto;
-}
-
-#add-form,
-#login-form,
-#add h3
-{
-  display: flex;
-  flex-direction: column;
-  align-item: center;
-  gap: 10px;
-  max-width: 400px;
-  
-}
-
-#add-form input, 
-#add-form select,
-#add-form textarea,
-#login-form input
-{
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
-}
-
-#add-form button,
-#login-form button
-{
+  flex: 0 0 200px;
   padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background-color: gold;
-  font-size: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.card img,
+.poster-empty
+{
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 2px dashed var(--gold);
+  box-sizing: border-box;
+}
+
+.poster-empty
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--panel);
+  color: var(--muted);
+  font-size: 64px;
   font-weight: bold;
 }
 
-.add-form
+.poster
 {
-  border-right: 18px solid transparent;
-  border-image: url("images/film-strip-vertical-tile.svg") 0 18 0 0 repeat;
+  cursor: pointer;
 }
 
-.admin 
+.card h2
+{
+  font-size: 18px;
+  margin: 10px 0 5px;
+}
+
+.card p
+{
+  margin: 4px 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.card .stars
+{
+  color: var(--gold);
+}
+
+.admin
 {
   display: flex;
   gap: 8px;
@@ -248,10 +277,90 @@ header p
   color: white;
 }
 
-.poster
+#add-form,
+#login-form
 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+#add-form input,
+#add-form select,
+#add-form textarea,
+#login-form input
+{
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--panel);
+  color: var(--cream);
+  font-size: 16px;
+}
+
+#add-form button,
+#login-form button
+{
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--gold);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#tmdb-box
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+#tmdb-search
+{
+  flex: 1 1 200px;
+  box-sizing: border-box;
+  padding: 12px 20px;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background-color: var(--panel);
+  color: var(--cream);
+  font-size: 16px;
+}
+
+#tmdb-btn
+{
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--gold);
+  color: #1a0f08;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#tmdb-results
+{
+  width: 100%;
+}
+
+.tmdb-item
+{
+  margin-bottom: 6px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: var(--panel);
   cursor: pointer;
 }
+
+.tmdb-item:hover
+{
+  color: var(--gold);
+}
+
 
 #detail-content .detail-poster
 {
@@ -263,18 +372,15 @@ header p
 
 #back-btn
 {
+  margin-bottom: 15px;
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  background-color: #333;
-  color: white;
+  background-color: var(--panel);
+  color: var(--cream);
   font-size: 14px;
-  margin-bottom: 15px;
 }
-:root
-{
-  --header-height: 60px;
-}
+
 
 #about
 {
@@ -285,73 +391,14 @@ header p
 #about p,
 #about li
 {
-  color: #bbb;
+  color: var(--muted);
 }
 
 #about h3
 {
-  color: gold;
+  color: var(--gold);
   margin-top: 25px;
 }
-
-@media (max-width: 700px) 
-{
-  .layout
-  {
-    flex-direction: column;
-  }
-  .sidebar
-  {
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 18px;
-    padding: 12px;
-    top: var(--header-height);
-    z-index: 9;
-  }
-  
-  .sidebar a
-  {
-    background: none;
-    border: 1px dashed gold;
-    border-radius: 5px;
-    padding: 10px 15px;
-    white-space: nowrap;
-    width: auto;
-    min-width: auto;
-  }
-  
-  .content
-  {
-    padding: 10px;
-  }
-  
-  .card
-  {
-    flex: 0 0 160px;
-  }
-  
-  header h1
-  {
-    font-size: 18px;
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-  }
-  
-  #add h3
-  {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 2px dashed gold;
-    width: 50px;
-    margin: 0 50%;
-  }
-}
-
 
 .about-photo
 {
@@ -359,115 +406,51 @@ header p
   height: 160px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid gold;
+  border: 3px solid var(--gold);
   margin-bottom: 15px;
 }
 
-#tmdb-box
+.tmdb-credit
 {
-  margin: 10px;
+  font-size: 13px;
 }
 
-#tmdb-search
-{
-  width: 70%;
-  padding: 12px 20px;
-  border-radius: 25px;
-  border: none;
-  background-color: #333;
-  color: white;
-  font-size: 16px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-}
 
-#tmdb-btn
+@media (max-width: 700px)
 {
-  width: 20%;
-  padding: 12px 20px;
-  border-radius: 50px;
-  border: none;
-  background-color: mediumaquamarine;
-  color: white;
-  font-size: 16px;
-  margin-bottom: 20px;
-}
+  .layout
+  {
+    flex-direction: column;
+  }
 
-#finished,
-#ongoing,
-#towatch
-{
-  
-}
+  .sidebar
+  {
+    width: 100%;
+    height: auto;
+    align-self: stretch;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    z-index: 9;
+  }
 
-.film
-{
-  background: #0f0b09;
-border-radius: 6px;
-}
+  .sidebar a
+  {
+    flex: 0 0 100px;
+  }
 
-.film::before,
-.film::after
-{
-  content: "";
-  display: block;
-  height: 18px;
-  background: url("images/film-strip-tile.svg") repeat-x;
-}
+  .content
+  {
+    padding: 10px;
+  }
 
-.film .row
-{
-  padding: 10px 18px;
-}
+  .card
+  {
+    flex: 0 0 160px;
+  }
 
-header::before
-{
-  content: "";
-  display: block;
-  height: 16px;
-  margin-bottom: 10px;
-  background: url("images/marquee-bulbs-tile.svg") repeat-x;
-}
-
-.ticket
-{
-  background: url("images/ticket.svg") center / contain no-repeat;
-  padding: 20px 50px;
-}
-
-.brand
-{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.reel
-{
-  width: 56px;
-  height: 56px;
-}
-
-.reel
-{
-  animation: spin 12s linear infinite;
-}
-
-@keyframes spin
-{
-  to { transform: rotate(360deg); }
-}
-
-#add h3
-{
-  padding: 10px;
-  border: 2px dashed gold;
-  width: 20%;
-  margin: 0 50%;
-  border-radius: 30px;
-}
-
-.page h2
-{
-  background: url(images/ticket.svg);
+  header h1
+  {
+    font-size: 22px;
+  }
 }
