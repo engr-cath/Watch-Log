@@ -85,7 +85,7 @@ function renderByGenre(containerId, status) {
       matches.forEach(function (drama) {
         html += makeCard(drama);
       });
-      html += `<div></div>`;
+      html += `</div></div>`;
     });
 
     if (html === "") return;
@@ -118,6 +118,10 @@ function showPage(id) {
     page.hidden = true;
   });
   document.querySelector("#" + id).hidden = false;
+
+  links.forEach(function (link) {
+    link.classList.toggle("active", link.dataset.page === id);
+  });
 }
 
 function showLoggedIn(isLoggedIn) {
@@ -418,9 +422,10 @@ document.addEventListener("click", function(event) {
   showPage("add");
 });
 
+showPage("home");
 loadDramas();
 checkSession();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
-}
+      }
