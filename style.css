@@ -137,7 +137,7 @@ header h1
 header p
 {
   padding: 5px;
-  
+  margin-bottom: 5px;
 }
 
 .layout
