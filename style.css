@@ -23,8 +23,12 @@ body {
 
 .sidebar
 {
-  width: 110px;
+  width: 100%;
+  min-height: 45px;
+  box-sizing: border-box;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 12px;
   padding: 15px;
@@ -34,6 +38,10 @@ body {
   height: 100vh;
   align-self: flex-start;
   box-sizing: border-box;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
 }
 
 .search
@@ -137,7 +145,7 @@ header h1
 header p
 {
   padding: 5px;
-  margin-bottom: 5px;
+  
 }
 
 .layout
@@ -161,6 +169,11 @@ header p
 {
   color: white;
   text-decoration: none;
+  background: url(images/ticket) center / 100% no-repeat;
+  padding: 15px 20px;
+  text-align: center;
+  gap: 5px;
+  display: block;
 }
 
 .content
@@ -172,12 +185,15 @@ header p
 }
 
 #add-form,
-#login-form
+#login-form,
+#add h3
 {
   display: flex;
   flex-direction: column;
+  align-item: center;
   gap: 10px;
   max-width: 400px;
+  
 }
 
 #add-form input, 
@@ -298,12 +314,18 @@ header p
   
   .sidebar a
   {
+    background: none;
+    border: 1px dashed gold;
+    border-radius: 5px;
+    padding: 10px 15px;
     white-space: nowrap;
+    width: auto;
+    min-width: auto;
   }
   
   .content
   {
-    padding: 20px;
+    padding: 10px;
   }
   
   .card
@@ -313,16 +335,23 @@ header p
   
   header h1
   {
-    font-size: 25px;
+    font-size: 18px;
     display: flex;
     flex-direction: row;
     padding: 10px;
   }
-  header p
+  
+  #add h3
   {
-    margin: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px dashed gold;
+    width: 50px;
+    margin: 0 50%;
   }
 }
+
 
 .about-photo
 {
@@ -427,4 +456,18 @@ header::before
 @keyframes spin
 {
   to { transform: rotate(360deg); }
+}
+
+#add h3
+{
+  padding: 10px;
+  border: 2px dashed gold;
+  width: 20%;
+  margin: 0 50%;
+  border-radius: 30px;
+}
+
+.page h2
+{
+  background: url(images/ticket.svg);
 }
