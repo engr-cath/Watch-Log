@@ -364,7 +364,7 @@ header p
 
 #detail-content .detail-poster
 {
-  width: 200px;
+  width: 400px;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 8px;
