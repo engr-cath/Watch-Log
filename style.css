@@ -432,7 +432,7 @@ header p
     justify-content: flex-start;
     overflow-x: auto;
     z-index: 9;
-    position: sta;
+    position: static;
   }
 
   .sidebar a
@@ -447,7 +447,7 @@ header p
     letter-spacing: 2px;
     text-transform: uppercase;
     white-space: nowrap;
-    color: #1a0f08;
+    color: white;
     font-weight: normal;
 }
 
@@ -482,4 +482,4 @@ header p
     width: 40px;
     height: 40px;
   }
-    }
+}
