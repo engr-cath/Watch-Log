@@ -134,7 +134,7 @@ header p
   font-weight: bold;
 }
 
-/* display:flex would override the hidden attribute (Add link) */
+
 .sidebar a[hidden]
 {
   display: none;
@@ -303,9 +303,7 @@ header p
 #login-form button
 {
   padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--gold);
+  background: url("images/popcorn.svg") center / 100% 100% no-repeat;
   font-size: 16px;
   font-weight: bold;
 }
@@ -465,11 +463,6 @@ header p
   {
     height: auto;
     padding: 6px 15px 10px;
-  }
-  
-  header p
-  {
-    display: none;
   }
 
   header h1
