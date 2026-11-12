@@ -62,7 +62,7 @@ function makeCard(drama) {
 
 const row = document.querySelector("#home-row");
 
-const genreList = ["Romance", "Comedy", "Thriller", "Action"];
+const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Thriller", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", " Romantic Comedy", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", " Vampire", "Zombie", "Comedy Horror", "Science Fiction", "Sci-fi Comedy", " Science" , "Drama Anthology"];
 const countryList = ["Korean", "Japanese", "Chinese", "Thai", "Filipino", "Anime", "English"];
 
 function renderByGenre(containerId, status) {
@@ -428,4 +428,4 @@ checkSession();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
-      }
+}
