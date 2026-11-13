@@ -335,28 +335,36 @@ document.addEventListener("error", function (event) {
 const TMDB_KEY = "5e2055f9c8a8129c7ea1e3c8f0143e63";
 let tmdbResults = [];
 
-document.querySelector("#tmdb-btn").addEventListener("click", async function () {
-  const query = document.querySelector("#tmdb-search").value.trim();
-  if (query === "") return;
+let typingTimer;
 
+document.querySelector("#tmdb-search").addEventListener("input", function() {
+  clearTimeout(typingTimer);
+  
+  const query = this.value.trim();
   const box = document.querySelector("#tmdb-results");
-  box.innerHTML = "Searching...";
-
-  const response = await fetch(
-    `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}`
-  );
-  const data = await response.json();
-
-  tmdbResults = data.results.filter(function (r) {
-    return r.media_type === "movie" || r.media_type === "tv";
-  });
-
-  box.innerHTML = tmdbResults.map(function (r, i) {
-    const title = r.title || r.name;
-    const date = r.release_date || r.first_air_date || "";
-    return `<div class="tmdb-item" data-index="${i}">${title} (${date.slice(0, 4)})</div>`;
-  }).join("");
-});   
+  
+  if (query.length < 2) {
+    box.innerHTML = "";
+    return;
+  }
+  
+  typingTimer = setTimeout(async function() {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}`
+    );
+    const data = await response.json();
+    
+    tmdbResults = data.results.filter(function(r) {
+      return r.media_type === "movie" || r.media_type === "tv";
+    }).slice(0, 6);
+    
+    box.innerHTML = tmdbResults.map(function(r, i) {
+      const title = r.title || r.name;
+      const date = r.release_date || r.first_air_date || "";
+      return `<div class="tmdb-item" data-index="${i}">${title} (${date.slice(0, 4)})</div>`;
+    }).join("");
+  }, 300);
+});
 
 const genreMap = { 10749: "Romance", 35: "Comedy", 53: "Thriller", 28: "Action", 10759: "Action" };
 const languageMap = { ko: "Korean", ja: "Japanese", zh: "Chinese", th: "Thai", tl: "Filipino", en: "English" };
@@ -394,6 +402,7 @@ document.querySelector("#tmdb-results").addEventListener("click", async function
     : "";
 
   document.querySelector("#tmdb-results").innerHTML = "";
+  document.querySelector("#tmdb-search").value = r.title || r.name;
 });
 
 let editingId = null;
@@ -428,4 +437,4 @@ checkSession();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
-}
+      }
