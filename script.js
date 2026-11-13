@@ -6,6 +6,7 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let dramas = [];
 let loggedIn = false;
 let currentPage = "home";
+let editingId = null;
 
 async function loadDramas() {
   const { data, error } = await db.from("dramas").select("*");
@@ -60,12 +61,10 @@ function makeCard(drama) {
   `;
 }
 
-const row = document.querySelector("#home-row");
-
-const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Thriller", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", " Romantic Comedy", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", " Vampire", "Zombie", "Comedy Horror", "Science Fiction", "Sci-fi Comedy", " Science" , "Drama Anthology"];
+const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"];
 const countryList = ["Korean", "Japanese", "Chinese", "Thai", "Filipino", "Anime", "English"];
 
-function renderByGenre(containerId, status) {
+function renderByGenre(containerId, list) {
   const container = document.querySelector("#" + containerId);
   container.innerHTML = "";
 
@@ -73,9 +72,8 @@ function renderByGenre(containerId, status) {
     let html = "";
 
     countryList.forEach(function (country) {
-      const matches = dramas.filter(function (drama) {
-        return drama.status === status &&
-          drama.genres.includes(genre) &&
+      const matches = list.filter(function (drama) {
+        return drama.genres.includes(genre) &&
           drama.country === country;
       });
 
@@ -94,16 +92,17 @@ function renderByGenre(containerId, status) {
   });
 }
 
-function renderAll() {
-  row.innerHTML = "";
-
-  dramas.forEach(function (drama) {
-    row.innerHTML += makeCard(drama);
+function statusList(status) {
+  return dramas.filter(function (drama) {
+    return drama.status === status;
   });
+}
 
-  renderByGenre("finished-list", "finished");
-  renderByGenre("ongoing-list", "ongoing");
-  renderByGenre("towatch-list", "towatch");
+function renderAll() {
+  renderByGenre("home-list", dramas);
+  renderByGenre("finished-list", statusList("finished"));
+  renderByGenre("ongoing-list", statusList("ongoing"));
+  renderByGenre("towatch-list", statusList("towatch"));
 }
 
 const links = document.querySelectorAll(".sidebar a");
@@ -146,7 +145,7 @@ links.forEach(function (link) {
       editingId = null;
       addForm.reset();
     }
-    
+
     if (!link.dataset.page) return;
     showPage(link.dataset.page);
   });
@@ -155,18 +154,15 @@ links.forEach(function (link) {
 const searchBox = document.querySelector(".search");
 
 searchBox.addEventListener("input", function () {
+  showPage("home");
   const text = searchBox.value.toLowerCase();
 
-  row.innerHTML = "";
+  const found = dramas.filter(function (drama) {
+    return drama.title.toLowerCase().includes(text) ||
+      drama.genres.toLowerCase().includes(text);
+  });
 
-  dramas
-    .filter(function (drama) {
-      return drama.title.toLowerCase().includes(text) ||
-        drama.genres.toLowerCase().includes(text);
-    })
-    .forEach(function (drama) {
-      row.innerHTML += makeCard(drama);
-    });
+  renderByGenre("home-list", found);
 });
 
 const addForm = document.querySelector("#add-form");
@@ -186,15 +182,14 @@ addForm.addEventListener("submit", async function (event) {
     review: document.querySelector("#f-review").value,
     cast_list: document.querySelector("#f-cast").value
   };
-  
+
   let result;
   if (editingId === null) {
     result = await db.from("dramas").insert(newDrama);
-  }
-  else {
+  } else {
     result = await db.from("dramas").update(newDrama).eq("id", editingId);
   }
-  const {error} = result;
+  const { error } = result;
 
   if (error) {
     alert("Could not add: " + error.message);
@@ -281,11 +276,11 @@ function showDetail(drama) {
   }
 
   let posterTag = `<div class="detail-poster poster-empty">${drama.title.charAt(0).toUpperCase()}</div>`;
-  
-  if (drama.poster){
+
+  if (drama.poster) {
     posterTag = `<img class="detail-poster" src="${drama.poster}" alt="${drama.title}">`;
   }
-  
+
   document.querySelector("#detail-content").innerHTML = `
     ${posterTag}
     <h2>${drama.title} (${drama.year})</h2>
@@ -319,10 +314,10 @@ document.addEventListener("error", function (event) {
   const img = event.target;
 
   if (img.tagName !== "IMG") return;
-  
+
   const isDetail = img.classList.contains("detail-poster");
   const isCard = img.classList.contains("poster");
-  
+
   if (!isDetail && !isCard) return;
 
   const box = document.createElement("div");
@@ -331,34 +326,34 @@ document.addEventListener("error", function (event) {
   box.textContent = img.alt.charAt(0).toUpperCase();
   img.replaceWith(box);
 }, true);
- 
+
 const TMDB_KEY = "5e2055f9c8a8129c7ea1e3c8f0143e63";
 let tmdbResults = [];
 
 let typingTimer;
 
-document.querySelector("#tmdb-search").addEventListener("input", function() {
+document.querySelector("#tmdb-search").addEventListener("input", function () {
   clearTimeout(typingTimer);
-  
+
   const query = this.value.trim();
   const box = document.querySelector("#tmdb-results");
-  
+
   if (query.length < 2) {
     box.innerHTML = "";
     return;
   }
-  
-  typingTimer = setTimeout(async function() {
+
+  typingTimer = setTimeout(async function () {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}`
     );
     const data = await response.json();
-    
-    tmdbResults = data.results.filter(function(r) {
+
+    tmdbResults = data.results.filter(function (r) {
       return r.media_type === "movie" || r.media_type === "tv";
     }).slice(0, 6);
-    
-    box.innerHTML = tmdbResults.map(function(r, i) {
+
+    box.innerHTML = tmdbResults.map(function (r, i) {
       const title = r.title || r.name;
       const date = r.release_date || r.first_air_date || "";
       return `<div class="tmdb-item" data-index="${i}">${title} (${date.slice(0, 4)})</div>`;
@@ -395,8 +390,8 @@ document.querySelector("#tmdb-results").addEventListener("click", async function
   document.querySelector("#f-title").value = r.title || r.name;
   document.querySelector("#f-year").value = date.slice(0, 4);
   document.querySelector("#f-episodes").value = episodes;
-  document.querySelector("#f-genres").value = genre;
-  document.querySelector("#f-country").value = languageMap[r.original_language] || "";
+  if (genre) document.querySelector("#f-genres").value = genre;
+  document.querySelector("#f-country").value = languageMap[r.original_language] || "English";
   document.querySelector("#f-poster").value = r.poster_path
     ? "https://image.tmdb.org/t/p/w500" + r.poster_path
     : "";
@@ -405,18 +400,16 @@ document.querySelector("#tmdb-results").addEventListener("click", async function
   document.querySelector("#tmdb-search").value = r.title || r.name;
 });
 
-let editingId = null;
-
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
   const btn = event.target.closest(".edit-btn");
   if (!btn) return;
-  
+
   const drama = dramas.find(function (d) {
     return String(d.id) === btn.dataset.id;
   });
-  
+
   editingId = drama.id;
-  
+
   document.querySelector("#f-title").value = drama.title;
   document.querySelector("#f-poster").value = drama.poster || "";
   document.querySelector("#f-year").value = drama.year;
@@ -427,7 +420,7 @@ document.addEventListener("click", function(event) {
   document.querySelector("#f-rating").value = drama.rating;
   document.querySelector("#f-cast").value = drama.cast_list || "";
   document.querySelector("#f-review").value = drama.review || "";
-  
+
   showPage("add");
 });
 
@@ -437,4 +430,4 @@ checkSession();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
-      }
+}
