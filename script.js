@@ -112,6 +112,8 @@ const loginLink = document.querySelector("#login-link");
 
 function showPage(id) {
   if (id !== "detail") currentPage = id;
+  
+  searchBox.hidden = ["add", "login", " about", "detail"].includes(id);
 
   pages.forEach(function (page) {
     page.hidden = true;
