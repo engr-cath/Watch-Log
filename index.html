@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta lang="en">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watchlog</title>
     <link rel="stylesheet" href="style.css">
@@ -62,57 +63,116 @@
           <div id="towatch-list"></div>
         </div>
 
-        <div class="page" id="add" hidden>
-          <h2>New Series/Movie</h2>
-
-          <div id="tmdb-box">
-            <input type="text" id="tmdb-search" placeholder="Search TMDB to auto-fill...">
-            <button type="button" id="tmdb-btn">Search</button>
+        <div id="add" class="page" hidden>
+          <h2>NEW SERIES/MOVIE</h2>
+            
+          <div class="clapper">
+              
+            <div class="clapper-arm">
+              <input id="tmdb-search" type="search" placeholder="Title"/>
+            </div>
             <div id="tmdb-results"></div>
+              
+            <form id="add-form">
+              <div class="cell w6">
+                <label for="f-title">Title</label>
+                <input id="f-title" type="text"/>
+              </div>
+                
+              <div class="cell w2">
+                <label for="f-year">Year</label>
+                <input id="f-year" type="number" />
+              </div>
+                
+              <div class="cell w2">
+                <label for="f-genres"Genre></label>
+                <select id="f-genres">
+                  <option>Thriller</option>
+                  <option>Comedy</option>
+                  <option>Romance</option>
+                  <option>Action</option>
+                  <option>Detective</option>
+                  <option>Gangster</option>
+                  <option>Mystery</option>
+                  <option>Fantasy</option>
+                  <optino>Fantasy Comedy</option>
+                  <option>Romantic Thrillee</option>
+                  <option>Romance Drama</option>
+                  <option>Thriller</option>
+                  <option>Adventure</option>
+                  <option>Animation</option>
+                  <option>Animated Series</option>
+                  <option> Action Comedy</option>
+                  <option>Comedy Drama</option>
+                  <option>Comedy Horror</option>
+                  <option>Romantic Horror</option>
+                  <option>Drama</option>
+                  <option>Legal Drama</option>
+                  <option>Medical Drama</option>
+                  <option>Melodrama</option>
+                  <option>Teen Drama</option>
+                  <option>Historical</option>
+                  <option>Horror</option>
+                  <option>Vampire</option>
+                  <option>Zombie</option>
+                  <option>Comedy Horror</option>
+                  <option>Science Fiction</option>
+                  <option>Sci-Fi Comedy</option>
+                  <option>Science</option>
+                  <option>Drama Anthology</option>
+                </select>
+              </div>
+                
+              <div class="cell w2">
+                <label for="f-episodes">Episodes</label>
+              </div>
+                
+              <div class="cell w2">
+                <select id="f-status">
+                  <option value="finished">Finished</option>
+                  <option value="ongoing">Ongoing</option>
+                  <option value="towatch">To Watch</option>
+                </select>
+              </div>
+               
+              <div class="cell w2">
+                <select id="f-country">
+                  <option>Korean</option>
+                  <option>Japanese</option>
+                  <option>Thai</option>
+                  <option>Filipino</option>
+                  <option>Anime</option>
+                  <option>English</option>
+                  <option>Chinese</option>
+                </select>
+              </div>
+                
+              <div class="cell w2">
+                <select id="f-rating">
+                  <option value="5">★★★★★</option>
+                  <option value="4">★★★★</option>
+                  <option value="3">★★★</option>
+                  <option value="2">★★</option>
+                  <option value="1">★</option>
+                </select>
+              </div>
+                
+              <div class="cell w6">
+                <label for="f-cast">Cast</label>
+                <textarea id="f-cast" rows="3"></textarea>
+              </div>
+
+              <div class="cell w6">
+                <label for="f-review">My Review</label>
+                <textarea id="f-review" rows="4"></textarea>
+              </div>        
+            </form>
           </div>
-
-          <form id="add-form">
-            <input type="text" id="f-title" placeholder="Title" required>
-            <input type="text" id="f-poster" placeholder="Poster Image Link">
-            <input type="number" id="f-year" placeholder="Year">
-            <input type="number" id="f-episodes" placeholder="Episodes">
-
-            <select id="f-genres">
-              <option>Thriller</option>
-              <option>Comedy</option>
-              <option>Romance</option>
-              <option>Action</option>
-            </select>
-
-            <select id="f-country">
-              <option>Korean</option>
-              <option>Japanese</option>
-              <option>Thai</option>
-              <option>Filipino</option>
-              <option>Anime</option>
-              <option>English</option>
-              <option>Chinese</option>
-            </select>
-
-            <select id="f-status">
-              <option value="finished">Finished</option>
-              <option value="ongoing">Ongoing</option>
-              <option value="towatch">To Watch</option>
-            </select>
-
-            <select id="f-rating">
-              <option value="5">★★★★★</option>
-              <option value="4">★★★★</option>
-              <option value="3">★★★</option>
-              <option value="2">★★</option>
-              <option value="1">★</option>
-            </select>
-
-            <textarea id="f-cast" placeholder="Cast, one per line: Actor as Character"></textarea>
-
-            <textarea id="f-review" placeholder="My review"></textarea>
-            <button type="submit">Add</button>
-          </form>
+            
+          <button type="submit" <form action="add-form" class="popcorn">
+            <img src="images/popcorn.svg" alt="" width="104" height="104">
+ 
+          </button>
         </div>
 
         <div class="page" id="login" hidden>
