@@ -21,7 +21,6 @@ body
   color: var(--cream);
 }
 
-
 header
 {
   background: url("images/curtain.svg") center / cover;
@@ -34,7 +33,7 @@ header
   height: var(--header-height);
 }
 
-
+/* row of marquee bulbs */
 header::before
 {
   content: "";
@@ -42,8 +41,6 @@ header::before
   height: 16px;
   margin: 0 -15px 10px;
   background: url("images/marquee-bulbs-tile.svg") repeat-x;
-  position: sticky;
-  top: 0;
 }
 
 .brand
@@ -51,7 +48,6 @@ header::before
   display: flex;
   align-items: center;
   gap: 14px;
-  position: sticky;
 }
 
 .reel
@@ -97,7 +93,6 @@ header p
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  /*justify-content: center;*/
   gap: 12px;
   padding: 10px;
   background:
@@ -134,10 +129,23 @@ header p
   font-weight: bold;
 }
 
-
 .sidebar a[hidden]
 {
   display: none;
+}
+
+#home > h2::before,
+#finished > h2::before,
+#ongoing > h2::before,
+#towatch > h2::before
+{
+  content: "";
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: url("images/camera.svg") center / contain no-repeat;
 }
 
 .search
@@ -296,12 +304,6 @@ header p
   font-size: 16px;
 }
 
-#login-form button
-{
-  padding: 12px;
-  background: url("images/popcorn.svg") center / 100% 100% no-repeat;
-}
-
 .clapper
 {
   position: relative;
@@ -318,7 +320,7 @@ header p
   padding: 0 20px;
   border: 3px solid var(--cream);
   border-radius: 6px 6px 0 0;
-  background: repeating-linear-gradient(115deg, #1411 0 34px, var(--cream) 34px 68px);
+  background: repeating-linear-gradient(115deg, #141110 0 34px, var(--cream) 34px 68px);
   transform: rotate(-4deg);
   transform-origin: 0 100%;
 }
@@ -406,6 +408,11 @@ header p
   padding: 0;
 }
 
+.cell select
+{
+  color-scheme: dark;
+}
+
 .popcorn
 {
   display: flex;
@@ -418,9 +425,20 @@ header p
   cursor: pointer;
 }
 
+.popcorn img
+{
+  transition: transform 0.2s;
+}
+
+.popcorn:hover img
+{
+  transform: scale(1.1) rotate(-5deg);
+}
+
 #detail-content .detail-poster
 {
   width: 400px;
+  max-width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 8px;
@@ -436,7 +454,6 @@ header p
   color: var(--cream);
   font-size: 14px;
 }
-
 
 #about
 {
@@ -469,16 +486,6 @@ header p
 .tmdb-credit
 {
   font-size: 13px;
-}
-
-.popcorn:hover img
-{
-  transform: scale(1.1) rotate(-5deg);
-}
-
-.popcorn img
-{
-  transition: transform 0.2s;
 }
 
 @media (max-width: 700px)
@@ -514,7 +521,7 @@ header p
     white-space: nowrap;
     color: white;
     font-weight: normal;
-}
+  }
 
   .content
   {
@@ -525,7 +532,7 @@ header p
   {
     flex: 0 0 160px;
   }
-  
+
   header
   {
     height: auto;
@@ -536,28 +543,28 @@ header p
   {
     font-size: 22px;
   }
-  
+
   .reel
   {
     width: 40px;
     height: 40px;
   }
-  
+
   .w2
-{
-  grid-column: span 3;   /* two cells per row instead of three */
-}
+  {
+    grid-column: span 3;   /* two cells per row instead of three */
+  }
 
-.clapper-arm
-{
-  height: 64px;
-  padding: 0 12px;
-}
+  .clapper-arm
+  {
+    height: 64px;
+    padding: 0 12px;
+  }
 
-#tmdb-results
-{
-  left: 20px;
-  right: 20px;
-  top: 88px;
-}
+  #tmdb-results
+  {
+    left: 20px;
+    right: 20px;
+    top: 88px;
+  }
 }
