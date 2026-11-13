@@ -33,7 +33,6 @@ header
   height: var(--header-height);
 }
 
-/* row of marquee bulbs */
 header::before
 {
   content: "";
@@ -150,7 +149,7 @@ header p
 
 .search
 {
-  display: block;
+  display: none;
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 20px;
