@@ -8,11 +8,41 @@ let loggedIn = false;
 let currentPage = "home";
 let editingId = null;
 
+const popup = document.querySelector("#popup");
+const popupText = document.querySelector("#popup-text");
+const popupOk = document.querySelector("#popup-ok");
+const popupCancel = document.querySelector("#popup-cancel");
+
+function showPopup(message, askQuestion) {
+  popupText.textContent = message;
+  popupCancel.hidden = !askQuestion;
+  popup.hidden = false;
+
+  return new Promise(function (resolve) {
+    popupOk.onclick = function () {
+      popup.hidden = true;
+      resolve(true);
+    };
+    popupCancel.onclick = function () {
+      popup.hidden = true;
+      resolve(false);
+    };
+  });
+}
+
+function showMessage(message) {
+  return showPopup(message, false);
+}
+
+function askConfirm(message) {
+  return showPopup(message, true);
+}
+
 async function loadDramas() {
   const { data, error } = await db.from("dramas").select("*");
 
   if (error) {
-    alert("Could not load: " + error.message);
+    showMessage("Could not load: " + error.message);
     return;
   }
 
@@ -109,11 +139,21 @@ const links = document.querySelectorAll(".sidebar a");
 const pages = document.querySelectorAll(".page");
 const addLink = document.querySelector("#add-link");
 const loginLink = document.querySelector("#login-link");
+const searchBar = document.querySelector("#search-bar");
+const searchBox = document.querySelector(".search");
+const searchPages = ["home", "finished", "ongoing", "towatch"];
 
 function showPage(id) {
   if (id !== "detail") currentPage = id;
-  
-  searchBox.hidden = ["add", "login", " about", "detail"].includes(id);
+
+  searchBar.hidden = !searchPages.includes(id);
+
+  if (id !== "detail" && searchBox.value !== "") {
+    searchBox.value = "";
+    renderAll();
+  }
+
+  window.scrollTo(0, 0);
 
   pages.forEach(function (page) {
     page.hidden = true;
@@ -153,18 +193,25 @@ links.forEach(function (link) {
   });
 });
 
-const searchBox = document.querySelector(".search");
+const pageLists = {
+  home: function () { return dramas; },
+  finished: function () { return statusList("finished"); },
+  ongoing: function () { return statusList("ongoing"); },
+  towatch: function () { return statusList("towatch"); }
+};
 
 searchBox.addEventListener("input", function () {
-  showPage("home");
+  const getList = pageLists[currentPage];
+  if (!getList) return;
+
   const text = searchBox.value.toLowerCase();
 
-  const found = dramas.filter(function (drama) {
+  const found = getList().filter(function (drama) {
     return drama.title.toLowerCase().includes(text) ||
       drama.genres.toLowerCase().includes(text);
   });
 
-  renderByGenre("home-list", found);
+  renderByGenre(currentPage + "-list", found);
 });
 
 const addForm = document.querySelector("#add-form");
@@ -194,7 +241,7 @@ addForm.addEventListener("submit", async function (event) {
   const { error } = result;
 
   if (error) {
-    alert("Could not add: " + error.message);
+    showMessage("Could not add: " + error.message);
     return;
   }
 
@@ -234,13 +281,13 @@ async function checkSession() {
 document.addEventListener("click", async function (event) {
   if (!event.target.classList.contains("delete-btn")) return;
 
-  if (!confirm("Delete this drama?")) return;
+  if (!(await askConfirm("Delete this drama?"))) return;
 
   const id = event.target.dataset.id;
   const { error } = await db.from("dramas").delete().eq("id", id);
 
   if (error) {
-    alert("Could not delete: " + error.message);
+    showMessage("Could not delete: " + error.message);
     return;
   }
 
@@ -256,7 +303,7 @@ document.addEventListener("change", async function (event) {
   const { error } = await db.from("dramas").update({ status: newStatus }).eq("id", id);
 
   if (error) {
-    alert("Could not update: " + error.message);
+    showMessage("Could not update: " + error.message);
     return;
   }
 
@@ -425,6 +472,20 @@ document.addEventListener("click", function (event) {
 
   showPage("add");
 });
+
+function setStickyOffsets() {
+  const header = document.querySelector("header");
+  const sidebar = document.querySelector(".sidebar");
+  const isPhone = window.matchMedia("(max-width: 700px)").matches;
+  const root = document.documentElement;
+
+  root.style.setProperty("--header-height", header.offsetHeight + "px");
+  root.style.setProperty("--nav-height", isPhone ? sidebar.offsetHeight + "px" : "0px");
+}
+
+window.addEventListener("resize", setStickyOffsets);
+window.addEventListener("load", setStickyOffsets);
+setStickyOffsets();
 
 showPage("home");
 loadDramas();
