@@ -1,3 +1,4 @@
+
 :root
 {
   --bg: #0f0b09;
@@ -11,6 +12,7 @@
   --cream: #f3e9d8;
   --muted: #b9a98f;
   --header-height: 120px;
+  --nav-height: 0px;        
   font-family: "Bebas Neue", sans-serif;
 }
 
@@ -29,8 +31,6 @@ header
   position: sticky;
   top: 0;
   z-index: 20;
-  box-sizing: border-box;
-  height: var(--header-height);
 }
 
 header::before
@@ -136,7 +136,9 @@ header p
 #home > h2::before,
 #finished > h2::before,
 #ongoing > h2::before,
-#towatch > h2::before
+#towatch > h2::before,
+#login > h2::before,
+#add > h2::before
 {
   content: "";
   display: inline-block;
@@ -147,19 +149,51 @@ header p
   background: url("images/camera.svg") center / contain no-repeat;
 }
 
-.search
+.search-bar
+{
+  position: sticky;
+  top: calc(var(--header-height) + var(--nav-height));
+  z-index: 10;
+  margin: -15px -15px 15px;
+  padding: 15px;
+  background: var(--bg);
+}
+
+.search-bar[hidden]
 {
   display: none;
+}
+
+.search-bar
+{
+  position: sticky;
+  top: calc(var(--header-height) + var(--nav-height));
+  z-index: 10;
+  margin: -15px -15px 15px;
+  padding: 15px;
+  background: transparent;
+}
+
+.search
+{
+  display: block;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 20px;
   padding: 12px 20px;
-  border: 1px solid var(--gold);
+  border: 1px solid gold;
   border-radius: 25px;
-  background-color: var(--panel);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   color: var(--cream);
   font-size: 16px;
   text-transform: uppercase;
+}
+
+.search::placeholder
+{
+  color: rgba(243, 233, 216, 0.6);
 }
 
 .genre
@@ -434,6 +468,207 @@ header p
   transform: scale(1.1) rotate(-5deg);
 }
 
+.popup
+{
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.popup[hidden]
+{
+  display: none;
+}
+
+.camera
+{
+  position: relative;
+  box-sizing: border-box;
+  width: min(360px, 100%);
+  padding: 60px 46px 0 0;
+}
+
+.cam-reel
+{
+  position: absolute;
+  top: 0;
+  width: 84px;
+  height: 84px;
+  box-sizing: border-box;
+  border: 5px solid var(--gold);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold) 0 10px, var(--panel) 11px);
+}
+
+.cam-reel-left  { left: 14px; }
+.cam-reel-right { left: 112px; }
+
+.cam-body
+{
+  position: relative;
+  z-index: 1;
+  padding: 22px 20px;
+  border: 5px solid var(--gold);
+  border-radius: 16px;
+  background: var(--panel);
+  text-align: center;
+}
+
+.cam-body p
+{
+  margin: 0 0 18px;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+.popup-buttons
+{
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.popup-buttons button
+{
+  padding: 8px 22px;
+  border: none;
+  border-radius: 8px;
+  background: var(--gold);
+  color: #1a0f08;
+  font-size: 18px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.popup-buttons button[hidden]
+{
+  display: none;
+}
+
+#popup-cancel
+{
+  background: #c0392b;
+  color: white;
+}
+
+.cam-lens
+{
+  position: absolute;
+  right: 0;
+  top: calc(60px + 50%);
+  width: 48px;
+  height: 100px;
+  transform: translateY(-50%);
+  background: var(--gold);
+  clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 70%);
+}
+
+.credits
+{
+  position: relative;
+  height: 70vh;
+  overflow: hidden;
+  border: 3px solid var(--gold);
+  border-radius: 6px;
+  background: #000;
+  text-align: center;
+}
+
+.credits-roll
+{
+  position: scroll;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding: 0 20px;
+  animation: roll 50s linear infinite;
+}
+
+@keyframes roll
+{
+  to { transform: translateY(calc(-100% - 70vh)); }
+}
+
+.credits:hover .credits-roll,
+.credits:active .credits-roll
+{
+  animation-play-state: paused;
+}
+
+.credit
+{
+  margin: 0 0 34px;
+}
+
+.credit .role
+{
+  display: block;
+  font-size: 15px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.credit .name
+{
+  display: block;
+  margin-top: 4px;
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: var(--cream);
+}
+
+.credit-title
+{
+  margin: 40px 0 16px;
+  font-size: 36px;
+  letter-spacing: 6px;
+  color: var(--gold);
+}
+
+.credit-text,
+.credit-small
+{
+  max-width: 420px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.credit-small
+{
+  margin-top: 50px;
+  font-size: 13px;
+}
+
+.credit-end
+{
+  margin: 20px 0 60px;
+  font-size: 48px;
+  letter-spacing: 10px;
+  color: var(--cream);
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+  .credits
+  {
+    height: auto;
+    overflow: visible;
+  }
+
+  .credits-roll
+  {
+    position: static;
+    animation: none;
+  }
+}
+
 #detail-content .detail-poster
 {
   width: 400px;
@@ -454,24 +689,6 @@ header p
   font-size: 14px;
 }
 
-#about
-{
-  max-width: 600px;
-  line-height: 1.6;
-}
-
-#about p,
-#about li
-{
-  color: var(--muted);
-}
-
-#about h3
-{
-  color: var(--gold);
-  margin-top: 25px;
-}
-
 .about-photo
 {
   width: 160px;
@@ -480,11 +697,6 @@ header p
   border-radius: 50%;
   border: 3px solid var(--gold);
   margin-bottom: 15px;
-}
-
-.tmdb-credit
-{
-  font-size: 13px;
 }
 
 @media (max-width: 700px)
@@ -502,15 +714,17 @@ header p
     flex-direction: row;
     justify-content: flex-start;
     overflow-x: auto;
-    z-index: 9;
-    position: static;
+    z-index: 15;
+    padding: 6px 10px;
+    position: sticky;
+    top: var(--header-height);
   }
 
   .sidebar a
   {
     flex: 0 0 auto;
     aspect-ratio: auto;
-    padding: 8px 16px;
+    padding: 6px 14px;
     background: none;
     border: 2px dashed var(--gold);
     border-radius: 6px;
@@ -525,6 +739,17 @@ header p
   .content
   {
     padding: 10px;
+  }
+
+  .search-bar
+  {
+    margin: -10px -10px 10px;
+    padding: 8px 10px;
+  }
+
+  .credits
+  {
+    height: 60vh;
   }
 
   .card
@@ -551,7 +776,7 @@ header p
 
   .w2
   {
-    grid-column: span 3;   /* two cells per row instead of three */
+    grid-column: span 3;
   }
 
   .clapper-arm
