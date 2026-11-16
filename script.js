@@ -91,7 +91,13 @@ function makeCard(drama) {
   `;
 }
 
-const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"];
+const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"].sort();
+
+/* fill the genre suggestions under the Genre box (already A to Z) */
+document.querySelector("#genre-options").innerHTML = genreList.map(function (genre) {
+  return `<option value="${genre}">`;
+}).join("");
+
 const countryList = ["Korean", "Japanese", "Chinese", "Thai", "Filipino", "Anime", "English"];
 
 function renderByGenre(containerId, list) {
@@ -163,6 +169,11 @@ function showPage(id) {
   links.forEach(function (link) {
     link.classList.toggle("active", link.dataset.page === id);
   });
+
+  if (id === "about") {
+    creditsPosition = 0;
+    credits.scrollTop = 0;
+  }
 }
 
 function showLoggedIn(isLoggedIn) {
@@ -231,6 +242,11 @@ addForm.addEventListener("submit", async function (event) {
     review: document.querySelector("#f-review").value,
     cast_list: document.querySelector("#f-cast").value
   };
+
+  if (!genreList.includes(newDrama.genres)) {
+    showMessage("Please pick a genre from the list.");
+    return;
+  }
 
   let result;
   if (editingId === null) {
@@ -472,6 +488,57 @@ document.addEventListener("click", function (event) {
 
   showPage("add");
 });
+
+
+const credits = document.querySelector(".credits");
+const creditsSpeed = 40;          // pixels per second (bigger = faster)
+let creditsAuto = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let creditsPosition = 0;
+let creditsLastTime = 0;
+let creditsTimer;
+
+function rollCredits(time) {
+  const seconds = (time - creditsLastTime) / 1000;
+  creditsLastTime = time;
+
+  const aboutOpen = !document.querySelector("#about").hidden;
+
+  if (creditsAuto && aboutOpen && seconds < 0.1) {
+    creditsPosition += creditsSpeed * seconds;
+    credits.scrollTop = creditsPosition;
+
+    if (creditsPosition >= credits.scrollHeight - credits.clientHeight) {
+      creditsPosition = 0;
+      credits.scrollTop = 0;
+    }
+  }
+
+  requestAnimationFrame(rollCredits);
+}
+
+function holdCredits() {
+  creditsAuto = false;
+  clearTimeout(creditsTimer);
+}
+
+function releaseCredits() {
+  clearTimeout(creditsTimer);
+  creditsTimer = setTimeout(function () {
+    creditsPosition = credits.scrollTop;
+    creditsAuto = true;
+  }, 2500);
+}
+
+credits.addEventListener("touchstart", holdCredits);
+credits.addEventListener("touchend", releaseCredits);
+credits.addEventListener("mousedown", holdCredits);
+credits.addEventListener("mouseup", releaseCredits);
+credits.addEventListener("wheel", function () {
+  holdCredits();
+  releaseCredits();
+});
+
+requestAnimationFrame(rollCredits);
 
 function setStickyOffsets() {
   const header = document.querySelector("header");
