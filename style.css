@@ -658,8 +658,7 @@ header p
 {
   .credits
   {
-    height: auto;
-    overflow: visible;
+    --credits-height: 60vh;
   }
 
   .credits-roll
