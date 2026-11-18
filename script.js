@@ -103,28 +103,28 @@ const countryList = ["Korean", "Japanese", "Chinese", "Thai", "Filipino", "Anime
 function renderByGenre(containerId, list) {
   const container = document.querySelector("#" + containerId);
   container.innerHTML = "";
-
-  genreList.forEach(function (genre) {
+  
+  countryList.forEach(function(country) {
     let html = "";
-
-    countryList.forEach(function (country) {
-      const matches = list.filter(function (drama) {
-        return drama.genres.includes(genre) &&
-          drama.country === country;
+    
+    genreList.forEach(function(genre) {
+      const matches = list.filter(function(drama) {
+        return drama.country === country &&
+          drama.genres.includes(genre);
       });
-
+      
       if (matches.length === 0) return;
-
-      html += `<h3>${country}</h3><div class="film"><div class="row">`;
-      matches.forEach(function (drama) {
+      
+      html += `<h3>${genre}</h3><div class="film"><div class="row">`;
+      matches.forEach(function(drama) {
         html += makeCard(drama);
       });
       html += `</div></div>`;
     });
-
+    
     if (html === "") return;
-
-    container.innerHTML += `<section class="genre"><h1>${genre}</h1>${html}</section>`;
+    
+    container.innerHTML += `<section class="genre"><h1>${country}</h1>${html}</section>`;
   });
 }
 
