@@ -93,7 +93,6 @@ function makeCard(drama) {
 
 const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"].sort();
 
-/* fill the genre suggestions under the Genre box (already A to Z) */
 document.querySelector("#genre-options").innerHTML = genreList.map(function (genre) {
   return `<option value="${genre}">`;
 }).join("");
@@ -110,7 +109,7 @@ function renderByGenre(containerId, list) {
     genreList.forEach(function(genre) {
       const matches = list.filter(function(drama) {
         return drama.country === country &&
-          drama.genres.includes(genre);
+          drama.genres.trim() === genre;
       });
       
       if (matches.length === 0) return;
