@@ -137,6 +137,7 @@ header p
 #finished > h2::before,
 #ongoing > h2::before,
 #towatch > h2::before,
+#stats > h2::before,
 #login > h2::before,
 #add > h2::before
 {
@@ -635,6 +636,141 @@ header p
   color: var(--cream);
 }
 
+.stats-main
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.donut
+{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.donut::before
+{
+  content: "";
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.donut-center
+{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1;
+}
+
+.donut-center strong
+{
+  font-size: 56px;
+  color: var(--gold);
+}
+
+.donut-center span
+{
+  margin-top: 4px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.legend
+{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.legend b
+{
+  color: var(--cream);
+}
+
+.dot
+{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+}
+
+.stats-sub
+{
+  margin: 0 0 14px;
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+.stats-grid
+{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+.stats-small
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.stats-small h4
+{
+  margin: 0 0 12px;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
+.stats-small h4 small
+{
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stats-small .donut-center strong
+{
+  font-size: 26px;
+}
+
+.stats-small .legend
+{
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 14px;
+}
+
 #detail-content .detail-poster
 {
   width: 400px;
@@ -757,4 +893,4 @@ header p
     right: 20px;
     top: 88px;
   }
-}
+  }
