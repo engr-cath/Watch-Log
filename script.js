@@ -91,8 +91,9 @@ function makeCard(drama) {
   `;
 }
 
-const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Fantasy", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"].sort();
+const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Dark Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"].sort();
 
+/* fill the genre suggestions under the Genre box (already A to Z) */
 document.querySelector("#genre-options").innerHTML = genreList.map(function (genre) {
   return `<option value="${genre}">`;
 }).join("");
@@ -102,27 +103,27 @@ const countryList = ["Korean", "Japanese", "Chinese", "Thai", "Filipino", "Anime
 function renderByGenre(containerId, list) {
   const container = document.querySelector("#" + containerId);
   container.innerHTML = "";
-  
-  countryList.forEach(function(country) {
+
+  countryList.forEach(function (country) {
     let html = "";
-    
-    genreList.forEach(function(genre) {
-      const matches = list.filter(function(drama) {
+
+    genreList.forEach(function (genre) {
+      const matches = list.filter(function (drama) {
         return drama.country === country &&
           drama.genres.trim() === genre;
       });
-      
+
       if (matches.length === 0) return;
-      
+
       html += `<h3>${genre}</h3><div class="film"><div class="row">`;
-      matches.forEach(function(drama) {
+      matches.forEach(function (drama) {
         html += makeCard(drama);
       });
       html += `</div></div>`;
     });
-    
+
     if (html === "") return;
-    
+
     container.innerHTML += `<section class="genre"><h1>${country}</h1>${html}</section>`;
   });
 }
@@ -133,11 +134,106 @@ function statusList(status) {
   });
 }
 
+/* ---------- Statistics page ---------- */
+const chartColors = ["#e3b04b", "#c0392b", "#f3e9d8", "#d98e32", "#8c5a3c", "#e8c98a", "#a83246", "#b9a98f"];
+
+/* counts how many dramas have each value, e.g. { Korean: 5, Japanese: 2 } */
+function countBy(list, field) {
+  const counts = {};
+
+  list.forEach(function (drama) {
+    const key = String(drama[field]).trim();
+    counts[key] = (counts[key] || 0) + 1;
+  });
+
+  return counts;
+}
+
+/* draws one circle (donut) and its legend from the counts */
+function donutHtml(counts, size, centerText) {
+  const names = Object.keys(counts).sort(function (a, b) {
+    return counts[b] - counts[a];
+  });
+
+  const total = names.reduce(function (sum, name) {
+    return sum + counts[name];
+  }, 0);
+
+  let start = 0;
+  const slices = [];
+  const legend = [];
+
+  names.forEach(function (name, i) {
+    const color = chartColors[i % chartColors.length];
+    const percent = (counts[name] / total) * 100;
+    const end = i === names.length - 1 ? 100 : start + percent;
+
+    slices.push(`${color} ${start}% ${end}%`);
+    legend.push(
+      `<li><span class="dot" style="background:${color}"></span>${name} <b>${Math.round(percent)}%</b></li>`
+    );
+
+    start = end;
+  });
+
+  return `
+    <div class="donut" style="width:${size}px; background: conic-gradient(${slices.join(", ")});">
+      <div class="donut-center">${centerText}</div>
+    </div>
+    <ul class="legend">${legend.join("")}</ul>
+  `;
+}
+
+function renderStats() {
+  const box = document.querySelector("#stats-content");
+
+  /* "watched" = finished + on going. Change this line to count other statuses. */
+  const watched = dramas.filter(function (drama) {
+    return drama.status !== "towatch";
+  });
+
+  if (watched.length === 0) {
+    box.innerHTML = "<p>Nothing watched yet.</p>";
+    return;
+  }
+
+  const byCountry = countBy(watched, "country");
+  const countries = Object.keys(byCountry).sort(function (a, b) {
+    return byCountry[b] - byCountry[a];
+  });
+
+  let html = `
+    <div class="stats-main">
+      ${donutHtml(byCountry, 260, `<strong>${watched.length}</strong><span>watched</span>`)}
+    </div>
+    <h3 class="stats-sub">Genres in each country</h3>
+    <div class="stats-grid">
+  `;
+
+  countries.forEach(function (country) {
+    const inCountry = watched.filter(function (drama) {
+      return drama.country === country;
+    });
+    const countryPercent = Math.round((inCountry.length / watched.length) * 100);
+
+    html += `
+      <div class="stats-small">
+        <h4>${country} <small>${countryPercent}%</small></h4>
+        ${donutHtml(countBy(inCountry, "genres"), 130, `<strong>${inCountry.length}</strong>`)}
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  box.innerHTML = html;
+}
+
 function renderAll() {
   renderByGenre("home-list", dramas);
   renderByGenre("finished-list", statusList("finished"));
   renderByGenre("ongoing-list", statusList("ongoing"));
   renderByGenre("towatch-list", statusList("towatch"));
+  renderStats();
 }
 
 const links = document.querySelectorAll(".sidebar a");
