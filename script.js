@@ -91,9 +91,8 @@ function makeCard(drama) {
   `;
 }
 
-const genreList = ["Romance", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"].sort();
+const genreList = ["Romance", "Dark Fantasy", "Comedy", "Thriller", "Action", "Detective", "Gangster", "Mystery", "Fantasy", "Fantasy Comedy", "Romantic Thriller", "Romance Drama", "Adventure", "Animation", "Animated Series", "Action Comedy", "Comedy Drama", "Comedy Horror", "Romantic Comedy", "Romantic Horror", "Drama", "Legal Drama", "Medical Drama", "Melodrama", "Teen Drama", "Historical", "Horror", "Vampire", "Zombie", "Science Fiction", "Sci-Fi Comedy", "Science", "Drama Anthology"].sort();
 
-/* fill the genre suggestions under the Genre box (already A to Z) */
 document.querySelector("#genre-options").innerHTML = genreList.map(function (genre) {
   return `<option value="${genre}">`;
 }).join("");
@@ -134,7 +133,7 @@ function statusList(status) {
   });
 }
 
-const chartColors = ["#FAEBD7", "#DEB887", "#5F9EA0", "#FF7F50", "#6495ED", "#008B8B", "B8860B", "#BDB76B", "#E9967A", "#8FBC8F", "#483D8B", "#00CED1", "#00BFFF", "#696969", "#1E90FF", "#B22222", "#228B22", "#DCDCDC", "#DAA520", "#F0FFF0", "#FF69B4", "#CD5C5C", "#E6E6FA", "#FFF0F5", "#ADD8E6", "#FFB6C1", "6B8E23"];
+const chartColors = ["#FAEBD7", "#DEB887", "#5F9EA0", "#FF7F50", "#6495ED", "#008B8B", "#B8860B", "#BDB76B", "#E9967A", "#8FBC8F", "#483D8B", "#00CED1", "#00BFFF", "#696969", "#1E90FF", "#B22222", "#228B22", "#DCDCDC", "#DAA520", "#F0FFF0", "#FF69B4", "#CD5C5C", "#E6E6FA", "#FFF0F5", "#ADD8E6", "#FFB6C1", "#6B8E23"];
 
 function countBy(list, field) {
   const counts = {};
@@ -147,7 +146,7 @@ function countBy(list, field) {
   return counts;
 }
 
-/* draws one circle (donut) and its legend from the counts */
+
 function donutHtml(counts, size, centerText) {
   const names = Object.keys(counts).sort(function (a, b) {
     return counts[b] - counts[a];
@@ -185,7 +184,7 @@ function donutHtml(counts, size, centerText) {
 function renderStats() {
   const box = document.querySelector("#stats-content");
 
-  /* "watched" = finished + on going. Change this line to count other statuses. */
+  
   const watched = dramas.filter(function (drama) {
     return drama.status !== "towatch";
   });
